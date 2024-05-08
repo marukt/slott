@@ -1,1 +1,112 @@
 
+<!DOCTYPE html>
+<html>
+<head>
+   <link rel="stylesheet" href="ugly.css">
+    <style>
+        .container {
+            text-align: center;
+        
+        
+        .slot-machine {
+            display: inline-block;
+            border: 2px solid black;
+            padding: 10px;
+        }
+        
+        .spin-button {
+            margin-top: 20px;
+        }
+        
+        .score-output {
+            margin-top: 20px;
+        }
+    </style><style>
+        body {
+            background: linear-gradient(to right, yellow, pink);
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="slot-machine">
+            <table>
+                <tr>
+                    <td><img id="cell-0" src="3.png" width="100" height="100"></td>
+                    <td><img id="cell-1" src="5.png" width="100" height="100"></td>
+                    <td><img id="cell-2" src="9.png" width="100" height="100"></td>
+                </tr>
+                <tr>
+                    <td><img id="cell-3" src="5.png" width="100" height="100"></td>
+                    <td><img id="cell-4" src="7.png" width="100" height="100"></td>
+                    <td><img id="cell-5" src="10.png" width="100" height="100"></td>
+                </tr>
+                <tr>
+                    <td><img id="cell-6" src="6.png" width="100" height="100"></td>
+                    <td><img id="cell-7" src="8.png" width="100" height="100"></td>
+                    <td><img id="cell-8" src="11.png" width="100" height="100"></td>
+                </tr>
+            </table>
+        </div>
+        
+        <button class="spin-button" onclick="spin()">Spin</button>
+        
+        <div class="score-output">
+            Score: <span id="score">0</span>
+        </div>
+    </div>
+
+    <script>
+        var images = [
+            { name: "1.png", value: 10 },
+            { name: "2.png", value: 20 },
+            { name: "3.png", value: 30 },
+             { name: "4.png", value: 30 },
+              { name: "5.png", value: 30 },
+               { name: "6.png", value: 30 },
+                { name: "7.png", value: 30 },
+                 { name: "8.png", value: 30 },
+                  { name: "9.png", value: 30 },
+            // Add more images with their respective values
+        ];
+        
+        var slotMachine = document.getElementsByClassName("slot-machine")[0];
+        var cells = slotMachine.getElementsByTagName("img");
+        var scoreOutput = document.getElementById("score");
+        
+        var score = 0;
+        
+        function spin() {
+            for (var i = 0; i < cells.length; i++) {
+                var randomImage = getRandomImage();
+                cells[i].src = randomImage.name;
+                
+                if (i === 0) {
+                    continue;
+                }
+                
+                if (cells[i].src === cells[i - 1].src && cells[i].src === cells[i - 2].src) {
+                    score += randomImage.value;
+                    
+                    // Check for a winner
+                    if (score >= 9 * randomImage.value) {
+                        alert(" Be safe! You WON!");
+                    }
+                }
+            }
+            
+            scoreOutput.textContent = score;
+        }
+        
+        function getRandomImage() {
+            return images[Math.floor(Math.random() * images.length)];
+        }
+    </script>
+    <script src="js/ugly.js"></script>
+</body>
+</html>
